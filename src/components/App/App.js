@@ -23,8 +23,8 @@ export class App extends Component {
     status: 'idle',
   };
 
-  handleFormSubmit = (searchValue, page) => {
-    this.setState({ searchValue, page });
+  handleFormSubmit = (searchValue, page, searchData) => {
+    this.setState({ searchValue, page, searchData });
   };
 
   componentDidUpdate(_, prevState) {
@@ -46,7 +46,7 @@ export class App extends Component {
             );
           }
           const result = response.data.hits;
-          const pageTotal = Math.ceil(result / 12);
+          const pageTotal = Math.ceil(response.data.total / 12);
 
           this.setState(prevState => ({
             status: 'resolved',
@@ -63,18 +63,20 @@ export class App extends Component {
   };
 
   render() {
-    const { searchData, error, status, page, pages } = this.state;
+    const { searchData, error, status, page, pageTotal } = this.state;
 
+    // console.log(searchData.length);
     return (
       <Application>
         <Searchbar onSubmit={this.handleFormSubmit} />
         {status === 'idle' && <p>Enter search value</p>}
 
         {status === 'rejected' && <ErrorView message={error.message} />}
-        {status === 'resolved' && <ImageGallery searchData={searchData} />}
+        {/* {status === 'resolved' && <ImageGallery searchData={searchData} />} */}
+        <ImageGallery searchData={searchData} />
         {status === 'pending' && <Loader />}
 
-        {searchData.length > 0 && page !== pages && (
+        {searchData.length > 0 && page !== pageTotal && (
           <Button loadMore={this.loadMore} buttonName="Load more" />
         )}
         <ToastContainer />
