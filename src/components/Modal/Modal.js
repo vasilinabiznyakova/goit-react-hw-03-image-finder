@@ -27,9 +27,11 @@ export class Modal extends Component {
   };
 
   render() {
+    const children = this.props.children;
+
     return createPortal(
       <Overlay onClick={this.handleOverlayClick}>
-        <ModalWindow>{this.props.children}</ModalWindow>
+        <ModalWindow>{children}</ModalWindow>
       </Overlay>,
 
       modalRoot
@@ -39,4 +41,5 @@ export class Modal extends Component {
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
 };

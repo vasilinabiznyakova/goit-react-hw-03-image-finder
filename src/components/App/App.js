@@ -23,8 +23,14 @@ export class App extends Component {
     status: 'idle',
   };
 
-  handleFormSubmit = (searchValue, page, searchData) => {
-    this.setState({ searchValue, page, searchData });
+  handleFormSubmit = searchValue => {
+    if (this.state.searchValue !== searchValue) {
+      this.setState({
+        searchValue,
+        page: 1,
+        searchData: [],
+      });
+    }
   };
 
   componentDidUpdate(_, prevState) {

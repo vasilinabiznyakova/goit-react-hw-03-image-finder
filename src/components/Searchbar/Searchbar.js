@@ -16,8 +16,6 @@ import { AiOutlineSearch } from 'react-icons/ai';
 export class Searchbar extends Component {
   state = {
     searchValue: '',
-    page: 1,
-    searchData: [],
   };
 
   handleSearchChange = event => {
@@ -30,18 +28,13 @@ export class Searchbar extends Component {
       return toast.error('Please enter any value to search for');
     }
 
-    this.props.onSubmit(
-      this.state.searchValue,
-      this.state.page,
-      this.state.searchData
-    );
+    this.props.onSubmit(this.state.searchValue);
 
-    this.setState({ searchValue: '', page: 1, searchData: [] });
+    this.setState({ searchValue: '' });
     event.target.reset();
   };
 
   render() {
-    console.log(this.state.searchValue);
     return (
       <Searchbox>
         <SearchForm onSubmit={this.handleSubmit}>
